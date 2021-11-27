@@ -18,6 +18,7 @@ type Boolean struct {
 	editor *editor.TextEditor
 }
 
+// Show displays the prompt to the user and blocks the current Go routine until the user submits
 func (b *Boolean) Show() error {
 	err := b.base.Show()
 	if err != nil {
@@ -61,7 +62,12 @@ func (b *Boolean) render(isFinished bool) {
 
 	b.output.writeColor("? ", colorGreen)
 	b.output.write(b.Question)
-	b.output.writeColor(" (y/N) ", colorGreen)
+
+	if b.defaultResponse() {
+		b.output.writeColor("(Y/n) ", colorGreen)
+	} else {
+		b.output.writeColor(" (y/N) ", colorGreen)
+	}
 
 	b.editor.SetFirstLineIndent(b.output.cursorColumn)
 
@@ -79,6 +85,15 @@ func (b *Boolean) render(isFinished bool) {
 	b.output.flush()
 }
 
+func (b* Boolean) defaultResponse() bool {
+	if b.IsTrueFunc != nil {
+		return b.IsTrueFunc("")
+	}
+
+	return defaultIsYes("")
+}
+
+// Response returns the input from the user.
 func (b *Boolean) Response() bool {
 	if b.IsTrueFunc != nil {
 		return b.IsTrueFunc(b.editor.String())

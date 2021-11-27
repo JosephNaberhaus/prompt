@@ -33,6 +33,7 @@ type Text struct {
 	editor *editor.TextEditor
 }
 
+// Show displays the prompt to the user and blocks the current Go routine until the user submits
 func (t *Text) Show() error {
 	err := t.base.Show()
 	if err != nil {
@@ -67,14 +68,14 @@ func (t *Text) handleInput(input key) {
 	if input == controlEnter {
 		if t.IsSingleLine || t.editor.Empty() {
 			t.didAttemptSubmit = true
-			isFinished = t.Validate() == ""
+			isFinished = t.validate() == ""
 		} else {
 			paragraphs := t.editor.Paragraphs()
 
 			lastParagraphsAreEmpty := len(paragraphs) > 0 && paragraphs[len(paragraphs)-1] == "" && paragraphs[len(paragraphs)-2] == ""
 			if lastParagraphsAreEmpty && t.editor.CursorIsOnLastParagraph() {
 				t.didAttemptSubmit = true
-				isFinished = t.Validate() == ""
+				isFinished = t.validate() == ""
 
 				// The enter is going to happen below, so always remove at least on backspace to keep the cursor in the
 				// same row.
@@ -113,7 +114,7 @@ func (t *Text) render(isFinished bool) {
 	t.output.writeColor("? ", colorGreen)
 	t.output.write(t.Question)
 
-	validatorMessage := t.Validate()
+	validatorMessage := t.validate()
 	isValid := validatorMessage == ""
 
 	if !t.IsSingleLine {
@@ -159,7 +160,7 @@ func (t *Text) render(isFinished bool) {
 	t.output.flush()
 }
 
-func (t *Text) Validate() string {
+func (t *Text) validate() string {
 	if t.ValidatorFunc != nil {
 		return t.ValidatorFunc(t.editor.Paragraphs())
 	}
@@ -167,6 +168,8 @@ func (t *Text) Validate() string {
 	return ""
 }
 
+// Response returns the input from the user. If the user entered multiple lines then the lines will be broken up with
+// newline characters.
 func (t *Text) Response() string {
 	return t.editor.String()
 }
