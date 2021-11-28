@@ -32,6 +32,9 @@ type Select struct {
 	// Default is 7
 	NumLinesShown int
 
+	// Called when a key is pressed but before it is processed. Return `false` to cancel the event.
+	OnKeyFunc func(Prompt, Key) bool
+
 	offset int
 	cursor int
 
@@ -39,7 +42,7 @@ type Select struct {
 }
 
 func (s *Select) Show() error {
-	err := s.base.Show()
+	err := s.show()
 	if err != nil {
 		return err
 	}
@@ -50,11 +53,11 @@ func (s *Select) Show() error {
 	s.output.hideCursor()
 	s.render(false)
 
-	for s.state == Showing {
+	for s.State() == Showing {
 		nextKey, err := s.nextKey()
 		if err != nil {
 			s.output.showCursor()
-			s.Finish()
+			s.finish()
 			return err
 		}
 
@@ -64,8 +67,12 @@ func (s *Select) Show() error {
 	return nil
 }
 
-func (s *Select) handleInput(input key) {
-	if input == controlUp {
+func (s *Select) handleInput(input Key) {
+	if s.OnKeyFunc != nil && !s.OnKeyFunc(s, input) {
+		return
+	}
+
+	if input == ControlUp {
 		oldOptionIndex := s.lines[s.cursor].optionIndex
 		for oldOptionIndex == s.lines[s.cursor].optionIndex  ||	 !s.lines[s.cursor].isFirst {
 			s.cursor--
@@ -73,7 +80,7 @@ func (s *Select) handleInput(input key) {
 				s.cursor = len(s.lines) - 1
 			}
 		}
-	} else if input == controlDown {
+	} else if input == ControlDown {
 		oldOptionIndex := s.lines[s.cursor].optionIndex
 		for oldOptionIndex == s.lines[s.cursor].optionIndex {
 			s.cursor++
@@ -85,10 +92,10 @@ func (s *Select) handleInput(input key) {
 				s.offset--
 			}
 		}
-	} else if input == controlEnter {
+	} else if input == ControlEnter {
 		s.output.showCursor()
 		s.render(true)
-		s.Finish()
+		s.finish()
 		return
 	}
 

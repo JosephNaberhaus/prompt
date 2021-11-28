@@ -5,33 +5,33 @@ import (
 	"github.com/eiannone/keyboard"
 )
 
-type key interface {
-	isText() bool
-	rune() rune
+type Key interface {
+	IsText() bool
+	Rune() rune
 }
 
-type runeKey rune
+type RuneKey rune
 
-func (r runeKey) isText() bool {
+func (r RuneKey) IsText() bool {
 	return true
 }
 
-func (r runeKey) rune() rune {
+func (r RuneKey) Rune() rune {
 	return rune(r)
 }
 
-type controlKey uint8
+type ControlKey uint8
 
-func (c controlKey) isText() bool {
-	if c == controlSpace {
+func (c ControlKey) IsText() bool {
+	if c == ControlSpace {
 		return true
 	}
 
 	return false
 }
 
-func (c controlKey) rune() rune {
-	if c == controlSpace {
+func (c ControlKey) Rune() rune {
+	if c == ControlSpace {
 		return ' '
 	}
 
@@ -39,70 +39,142 @@ func (c controlKey) rune() rune {
 }
 
 const (
-	noop controlKey = iota
-	controlLeft
-	controlRight
-	controlUp
-	controlDown
-	controlEnter
-	controlBackspace
-	controlSpace
-	controlHome
-	controlEnd
+	Noop ControlKey = iota
+	ControlLeft
+	ControlRight
+	ControlUp
+	ControlDown
+	ControlEnter
+	ControlBackspace
+	ControlSpace
+	ControlHome
+	ControlEnd
+	ControlCtrlA
+	ControlCtrlB
+	ControlCtrlC
+	ControlCtrlD
+	ControlCtrlE
+	ControlCtrlF
+	ControlCtrlG
+	ControlCtrlI
+	ControlCtrlJ
+	ControlCtrlK
+	ControlCtrlL
+	ControlCtrlN
+	ControlCtrlO
+	ControlCtrlP
+	ControlCtrlQ
+	ControlCtrlR
+	ControlCtrlS
+	ControlCtrlT
+	ControlCtrlU
+	ControlCtrlV
+	ControlCtrlW
+	ControlCtrlX
+	ControlCtrlY
+	ControlCtrlZ
 )
 
-func ToKey(rune rune, key keyboard.Key) key {
+func ToKey(rune rune, key keyboard.Key) Key {
 	if rune != 0 {
-		return runeKey(rune)
+		return RuneKey(rune)
 	}
 
 	switch key {
 	case keyboard.KeyArrowLeft:
-		return controlLeft
+		return ControlLeft
 	case keyboard.KeyArrowRight:
-		return controlRight
+		return ControlRight
 	case keyboard.KeyArrowUp:
-		return controlUp
+		return ControlUp
 	case keyboard.KeyArrowDown:
-		return controlDown
+		return ControlDown
 	case keyboard.KeyEnter:
-		return controlEnter
+		return ControlEnter
 	case keyboard.KeyBackspace:
 		fallthrough
 	case keyboard.KeyBackspace2:
-		return controlBackspace
+		return ControlBackspace
 	case keyboard.KeySpace:
-		return controlSpace
+		return ControlSpace
 	case keyboard.KeyHome:
-		return controlHome
+		return ControlHome
 	case keyboard.KeyEnd:
-		return controlEnd
+		return ControlEnd
+	case keyboard.KeyCtrlA:
+		return ControlCtrlA
+	case keyboard.KeyCtrlB:
+		return ControlCtrlB
+	case keyboard.KeyCtrlC:
+		return ControlCtrlC
+	case keyboard.KeyCtrlD:
+		return ControlCtrlD
+	case keyboard.KeyCtrlE:
+		return ControlCtrlE
+	case keyboard.KeyCtrlF:
+		return ControlCtrlF
+	case keyboard.KeyCtrlG:
+		return ControlCtrlG
+	case keyboard.KeyCtrlI:
+		return ControlCtrlI
+	case keyboard.KeyCtrlJ:
+		return ControlCtrlJ
+	case keyboard.KeyCtrlK:
+		return ControlCtrlK
+	case keyboard.KeyCtrlL:
+		return ControlCtrlL
+	case keyboard.KeyCtrlN:
+		return ControlCtrlN
+	case keyboard.KeyCtrlO:
+		return ControlCtrlO
+	case keyboard.KeyCtrlP:
+		return ControlCtrlP
+	case keyboard.KeyCtrlQ:
+		return ControlCtrlQ
+	case keyboard.KeyCtrlR:
+		return ControlCtrlR
+	case keyboard.KeyCtrlS:
+		return ControlCtrlS
+	case keyboard.KeyCtrlT:
+		return ControlCtrlT
+	case keyboard.KeyCtrlU:
+		return ControlCtrlU
+	case keyboard.KeyCtrlV:
+		return ControlCtrlV
+	case keyboard.KeyCtrlW:
+		return ControlCtrlW
+	case keyboard.KeyCtrlX:
+		return ControlCtrlX
+	case keyboard.KeyCtrlY:
+		return ControlCtrlY
+	case keyboard.KeyCtrlZ:
+		return ControlCtrlZ
 	default:
-		return noop
+		return Noop
 	}
 }
 
-func applyKeyToEditor(k key, editor *editor.TextEditor) {
-	if k.isText() {
-		editor.Write(string(k.rune()))
+func applyKeyToEditor(k Key, editor *editor.TextEditor) {
+	if k.IsText() {
+		editor.Write(string(k.Rune()))
 	}
 
 	switch k {
-	case controlLeft:
+	case ControlLeft:
 		editor.Left()
-	case controlRight:
+	case ControlRight:
 		editor.Right()
-	case controlUp:
+	case ControlUp:
 		editor.Up()
-	case controlDown:
+	case ControlDown:
 		editor.Down()
-	case controlEnter:
+	case ControlEnter:
 		editor.Newline()
-	case controlBackspace:
+	case ControlBackspace:
 		editor.Backspace()
-	case controlHome:
+	case ControlHome:
 		editor.Home()
-	case controlEnd:
+	case ControlEnd:
 		editor.End()
 	}
 }

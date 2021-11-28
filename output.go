@@ -133,3 +133,10 @@ func (o *output) commit() {
 	o.nextLine()
 	o.flush()
 }
+
+func (o *output) uncommit() {
+	o.clear()
+	o.numExtraLinesInBuffer = 0
+	o.numExtraLinesWritten = 0
+	o.flush()
+}

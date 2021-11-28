@@ -15,12 +15,15 @@ type Boolean struct {
 	// Defaults to defaultIsYes which returns true for "y" or "yes" (ignore capitalization).
 	IsTrueFunc func(string) bool
 
+	// Called when a key is pressed but before it is processed. Return `false` to cancel the event.
+	OnKeyFunc func(Prompt, Key) bool
+
 	editor *editor.TextEditor
 }
 
 // Show displays the prompt to the user and blocks the current Go routine until the user submits
 func (b *Boolean) Show() error {
-	err := b.base.Show()
+	err := b.show()
 	if err != nil {
 		return err
 	}
@@ -29,10 +32,10 @@ func (b *Boolean) Show() error {
 	b.editor.SetWidth(b.output.outputWidth)
 	b.render(false)
 
-	for b.state == Showing {
+	for b.promptState == Showing {
 		nextKey, err := b.nextKey()
 		if err != nil {
-			b.Finish()
+			b.finish()
 			return err
 		}
 
@@ -42,14 +45,18 @@ func (b *Boolean) Show() error {
 	return nil
 }
 
-func (b *Boolean) handleInput(input key) {
-	if b.state != Showing {
+func (b *Boolean) handleInput(input Key) {
+	if b.State() != Showing {
 		return
 	}
 
-	if input == controlEnter {
+	if b.OnKeyFunc != nil && !b.OnKeyFunc(b, input) {
+		return
+	}
+
+	if input == ControlEnter {
 		b.render(true)
-		b.Finish()
+		b.finish()
 		return
 	}
 

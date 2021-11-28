@@ -1,5 +1,7 @@
 github.com/JosephNaberhaus/go-text-editor v0.0.0-20211126045903-266e1c706813 h1:IRcI7Qes7lxSR9PEl8dJw6oRS4FR9XgPE1MzdcutTPI=
 github.com/JosephNaberhaus/go-text-editor v0.0.0-20211126045903-266e1c706813/go.mod h1:BF1UmZlyezjdkPTRg8vrLrrxk23qC0/oCZxsN1QIYQY=
+github.com/JosephNaberhaus/keyboard v0.0.0-20211128182011-54c77376162b h1:kUgkHZWQpqDh0Ut+/0ziqrfKGZgCPC4c8eb2+zHvvQ4=
+github.com/JosephNaberhaus/keyboard v0.0.0-20211128182011-54c77376162b/go.mod h1:TjP3+iXKWA/xHYhGVfBT54sAqqhkNxkA5yiZX/whex4=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/eiannone/keyboard v0.0.0-20200508000154-caf4b762e807 h1:jdjd5e68T4R/j4PWxfZqcKY8KtT9oo8IPNVuV4bSXDQ=

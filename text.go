@@ -19,6 +19,9 @@ type Text struct {
 	// return a message to display to the user when it is not valid.
 	ValidatorFunc func([]string) string
 
+	// Called when a key is pressed but before it is processed. Return `false` to cancel the event.
+	OnKeyFunc func(Prompt, Key) bool
+
 	// Whether to show the character count to the user
 	ShouldShowCharacterCount bool
 
@@ -35,19 +38,22 @@ type Text struct {
 
 // Show displays the prompt to the user and blocks the current Go routine until the user submits
 func (t *Text) Show() error {
-	err := t.base.Show()
+	err := t.show()
 	if err != nil {
 		return err
 	}
 
-	t.editor = editor.NewEditor()
-	t.editor.SetWidth(t.output.outputWidth)
+	if t.editor == nil {
+		t.editor = editor.NewEditor()
+		t.editor.SetWidth(t.output.outputWidth)
+	}
+
 	t.render(false)
 
-	for t.state == Showing {
+	for t.State() == Showing {
 		nextKey, err := t.nextKey()
 		if err != nil {
-			t.Finish()
+			t.finish()
 			return err
 		}
 
@@ -57,15 +63,19 @@ func (t *Text) Show() error {
 	return nil
 }
 
-func (t *Text) handleInput(input key) {
-	if t.state != Showing {
+func (t *Text) handleInput(input Key) {
+	if t.State() != Showing {
+		return
+	}
+
+	if t.OnKeyFunc != nil && !t.OnKeyFunc(t, input) {
 		return
 	}
 
 	t.didAttemptSubmit = false
 	isFinished := false
 
-	if input == controlEnter {
+	if input == ControlEnter {
 		if t.IsSingleLine || t.editor.Empty() {
 			t.didAttemptSubmit = true
 			isFinished = t.validate() == ""
@@ -93,13 +103,13 @@ func (t *Text) handleInput(input key) {
 		}
 
 		t.render(true)
-		t.Finish()
+		t.finish()
 		return
 	}
 
-	if input != controlEnter || !t.IsSingleLine {
-		if t.ShouldForceLowercase && input.isText() {
-			input = runeKey(unicode.ToLower(input.rune()))
+	if input != ControlEnter || !t.IsSingleLine {
+		if t.ShouldForceLowercase && input.IsText() {
+			input = RuneKey(unicode.ToLower(input.Rune()))
 		}
 
 		applyKeyToEditor(input, t.editor)
