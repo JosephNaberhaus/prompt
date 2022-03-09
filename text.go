@@ -139,6 +139,8 @@ func (t *Text) render(isFinished bool) {
 
 	t.output.writeLn(":")
 
+	editorStartingRow := t.output.cursorRow
+
 	if t.ShouldShowCharacterCount {
 		prefix := fmt.Sprintf("(%d) ", t.editor.NumGraphemes())
 		t.editor.SetFirstLineIndent(len(prefix))
@@ -168,7 +170,7 @@ func (t *Text) render(isFinished bool) {
 
 	}
 
-	t.output.setCursor(t.editor.CursorRow()+1, t.editor.CursorColumn())
+	t.output.setCursor(t.editor.CursorRow()+editorStartingRow, t.editor.CursorColumn())
 	t.output.flush()
 }
 
