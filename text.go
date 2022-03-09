@@ -183,5 +183,9 @@ func (t *Text) validate() string {
 // Response returns the input from the user. If the user entered multiple lines then the lines will be broken up with
 // newline characters.
 func (t *Text) Response() string {
+	if t.editor == nil {
+		return ""
+	}
+
 	return t.editor.String()
 }

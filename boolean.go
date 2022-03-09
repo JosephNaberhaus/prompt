@@ -105,11 +105,16 @@ func (b *Boolean) defaultResponse() bool {
 
 // Response returns the input from the user.
 func (b *Boolean) Response() bool {
-	if b.IsTrueFunc != nil {
-		return b.IsTrueFunc(b.editor.String())
+	input := ""
+	if b.editor != nil {
+		input = b.editor.String()
 	}
 
-	return defaultIsYes(b.editor.String())
+	if b.IsTrueFunc != nil {
+		return b.IsTrueFunc(input)
+	}
+
+	return defaultIsYes(input)
 }
 
 func defaultIsYes(input string) bool {
