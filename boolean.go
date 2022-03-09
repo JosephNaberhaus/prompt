@@ -61,7 +61,10 @@ func (b *Boolean) handleInput(input Key) {
 	}
 
 	applyKeyToEditor(input, b.editor)
-	b.render(false)
+
+	if b.State() != Waiting {
+		b.render(false)
+	}
 }
 
 func (b *Boolean) render(isFinished bool) {
@@ -92,7 +95,7 @@ func (b *Boolean) render(isFinished bool) {
 	b.output.flush()
 }
 
-func (b* Boolean) defaultResponse() bool {
+func (b *Boolean) defaultResponse() bool {
 	if b.IsTrueFunc != nil {
 		return b.IsTrueFunc("")
 	}

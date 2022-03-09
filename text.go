@@ -115,7 +115,9 @@ func (t *Text) handleInput(input Key) {
 		applyKeyToEditor(input, t.editor)
 	}
 
-	t.render(false)
+	if t.State() != Waiting {
+		t.render(false)
+	}
 }
 
 func (t *Text) render(isFinished bool) {

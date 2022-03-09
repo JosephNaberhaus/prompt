@@ -15,8 +15,8 @@ type SelectionOption struct {
 
 type line struct {
 	optionIndex int
-	text string
-	isFirst bool
+	text        string
+	isFirst     bool
 }
 
 type Select struct {
@@ -74,7 +74,7 @@ func (s *Select) handleInput(input Key) {
 
 	if input == ControlUp {
 		oldOptionIndex := s.lines[s.cursor].optionIndex
-		for oldOptionIndex == s.lines[s.cursor].optionIndex  ||	 !s.lines[s.cursor].isFirst {
+		for oldOptionIndex == s.lines[s.cursor].optionIndex || !s.lines[s.cursor].isFirst {
 			s.cursor--
 			if s.cursor < 0 {
 				s.cursor = len(s.lines) - 1
@@ -99,7 +99,9 @@ func (s *Select) handleInput(input Key) {
 		return
 	}
 
-	s.render(false)
+	if s.State() != Waiting {
+		s.render(false)
+	}
 }
 
 func (s *Select) NumLinesToShow() int {
@@ -164,12 +166,12 @@ func (s *Select) computeLines() {
 	longestName := s.longestName()
 
 	for optionIndex, option := range s.Options {
-		wrappedDescription := wrapString(option.Description, s.output.outputWidth - longestName - 4)
+		wrappedDescription := wrapString(option.Description, s.output.outputWidth-longestName-4)
 
 		for i, wrapped := range wrappedDescription {
 			var currentLineText string
 			if i == 0 {
-				padding := strings.Repeat(" ", longestName - uniseg.GraphemeClusterCount(option.Name))
+				padding := strings.Repeat(" ", longestName-uniseg.GraphemeClusterCount(option.Name))
 				currentLineText = fmt.Sprintf("%s: %s%s", option.Name, padding, wrapped)
 			} else {
 				currentLineText = fmt.Sprintf("%s  %s", strings.Repeat(" ", longestName), wrapped)
@@ -177,8 +179,8 @@ func (s *Select) computeLines() {
 
 			s.lines = append(s.lines, line{
 				optionIndex: optionIndex,
-				text: currentLineText,
-				isFirst: i == 0,
+				text:        currentLineText,
+				isFirst:     i == 0,
 			})
 		}
 	}
