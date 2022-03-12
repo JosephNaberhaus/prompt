@@ -83,9 +83,9 @@ func (b *Boolean) render(isFinished bool) {
 
 	if isFinished {
 		if b.Response() {
-			b.output.writeColorLn("Yes", colorCyan)
+			b.output.writeColor("Yes", colorCyan)
 		} else {
-			b.output.writeColorLn("No", colorCyan)
+			b.output.writeColor("No", colorCyan)
 		}
 	} else {
 		b.output.write(b.editor.String())
