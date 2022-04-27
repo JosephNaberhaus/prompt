@@ -6,6 +6,7 @@ import (
 	escapes "github.com/snugfox/ansi-escapes"
 	"os"
 	"strings"
+	"unicode"
 )
 
 type output struct {
@@ -30,12 +31,24 @@ func (o *output) write(content string) {
 	gc := uniseg.NewGraphemes(content)
 	for gc.Next() {
 		current := gc.Str()
+		isNonAscii := len(current) != 1 && current[0] > unicode.MaxASCII
+
+		if isNonAscii {
+			o.buffer.WriteString(escapes.CursorSavePosition)
+		}
+
 		if current == "\n" {
 			o.nextLine()
 			continue
 		}
 
 		o.buffer.WriteString(current)
+
+		if isNonAscii {
+			o.buffer.WriteString(escapes.CursorRestorePosition)
+			o.buffer.WriteString(escapes.CursorForward)
+		}
+
 		o.cursorColumn++
 		o.wrapCursor()
 	}
