@@ -21,6 +21,14 @@ func max(a, b int) int {
 	return b
 }
 
+func abs(value int) int {
+	if value < 0 {
+		return -value
+	}
+
+	return value
+}
+
 func wrapString(toWrap string, width int) []string {
 	if len(toWrap) == 0 {
 		return []string{""}
