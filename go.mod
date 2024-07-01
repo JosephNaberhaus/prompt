@@ -5,7 +5,7 @@ go 1.22.3
 require (
 	github.com/JosephNaberhaus/texteditor v1.0.0
 	github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203
-	github.com/rivo/uniseg v0.3.0
+	github.com/rivo/uniseg v0.4.7
 	github.com/snugfox/ansi-escapes v0.2.1-0.20201222033053-82a0109803f0
 )
 
