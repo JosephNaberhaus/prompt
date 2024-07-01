@@ -1,7 +1,7 @@
 # Prompt
 Another GoLang prompt library with a couple of uncommon features:
 
-- Supports more advanced text editing by using my [Go Text Editor](https://github.com/JosephNaberhaus/go-text-editor) library
+- Supports more advanced text editing by using my [Go Text Editor](https://github.com/JosephNaberhaus/texteditor) library
     - Multiline text editing
     - Better cursor movement (`up`, `down`, `home`, and `end` all work)
 - Doesn't clear out and of your screen
