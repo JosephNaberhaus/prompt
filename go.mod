@@ -16,3 +16,5 @@ require (
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/eiannone/keyboard => github.com/cszczepaniak/keyboard v0.0.0-20240703001413-de782bcdc909
