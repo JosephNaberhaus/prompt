@@ -1,9 +1,9 @@
 github.com/JosephNaberhaus/texteditor v1.0.0 h1:ZIEjQteO4GKsBXiXwK0upR2C+ujm3/hu31bWhvgpaUs=
 github.com/JosephNaberhaus/texteditor v1.0.0/go.mod h1:u8ZXGoc10C73L9LJX425Ht1q8uhJkCg8PO2guMQAsa4=
+github.com/cszczepaniak/keyboard v0.0.0-20240703001413-de782bcdc909 h1:fECmk8wBKmMkAuJYI0Fi/jwBRdREmHXkZHAFp4aM6ao=
+github.com/cszczepaniak/keyboard v0.0.0-20240703001413-de782bcdc909/go.mod h1:E1jcSv8FaEny+OP/5k9UxZVw9YFWGj7eI4KR/iOBqCg=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203 h1:XBBHcIb256gUJtLmY22n99HaZTz+r2Z51xUPi01m3wg=
-github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203/go.mod h1:E1jcSv8FaEny+OP/5k9UxZVw9YFWGj7eI4KR/iOBqCg=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/rivo/uniseg v0.4.7 h1:WUdvkW8uEhrYfLC4ZzdpI2ztxP1I582+49Oc5Mq64VQ=
