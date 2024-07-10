@@ -1,7 +1,7 @@
 github.com/JosephNaberhaus/texteditor v1.0.0 h1:ZIEjQteO4GKsBXiXwK0upR2C+ujm3/hu31bWhvgpaUs=
 github.com/JosephNaberhaus/texteditor v1.0.0/go.mod h1:u8ZXGoc10C73L9LJX425Ht1q8uhJkCg8PO2guMQAsa4=
-github.com/cszczepaniak/keyboard v0.0.0-20240703001413-de782bcdc909 h1:fECmk8wBKmMkAuJYI0Fi/jwBRdREmHXkZHAFp4aM6ao=
-github.com/cszczepaniak/keyboard v0.0.0-20240703001413-de782bcdc909/go.mod h1:E1jcSv8FaEny+OP/5k9UxZVw9YFWGj7eI4KR/iOBqCg=
+github.com/cszczepaniak/keyboard v0.1.0 h1:pgLRkOUsmRqqc9jGITpqip83iHcUqACzW5Ks5VvC9Qg=
+github.com/cszczepaniak/keyboard v0.1.0/go.mod h1:lRCBYuxO8icrkQFwg5rFJYCuEd5tD+VeiHsIIzNNUSc=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=

@@ -17,4 +17,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/eiannone/keyboard => github.com/cszczepaniak/keyboard v0.0.0-20240703001413-de782bcdc909
+replace github.com/eiannone/keyboard => github.com/cszczepaniak/keyboard v0.1.0
